@@ -65,6 +65,8 @@ python pretrain.py -s <path to COLMAP>  -m  <model path> --eval --imp_metric ind
 ```shell
 python train.py -s  <path to COLMAP> -m <model path>  --eval --start_checkpoint  <model path>/chkpnt30000.pth 
 
+# To improve rendering perofmrance, you can use multi-view training from MVGS. It may cause longer training time and memory.
+python train.py -s  <path to COLMAP> -m <model path>  --eval --start_checkpoint  <model path>/chkpnt30000.pth   --mv  3
 ```
 
 ## Evaluation
@@ -81,7 +83,7 @@ Rendering with the compressed file (comp.xz), otherwise using the ply file. The 
 This work is built on many amazing research works and open-source projects, thanks a lot to all the authors for sharing!
 * [Mini-Splatting](https://github.com/fatPeter/mini-splatting)
 * [OMG](https://github.com/cvlab-columbia/zero123)
-
+* [MVGS](https://github.com/xiaobiaodu/MVGS)
 
 
 
