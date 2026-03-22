@@ -15,8 +15,8 @@ import os
 os.path.dirname(os.path.abspath(__file__))
 
 setup(
-    name="diff_gaussian_rasterization_ms_nosort",
-    packages=['diff_gaussian_rasterization_ms_nosort'],
+    name="diff_gaussian_rasterization_ms_nosorting",
+    packages=['diff_gaussian_rasterization_ms_nosorting'],
     ext_modules=[
         CUDAExtension(
             name="diff_gaussian_rasterization_ms_nosort._C",

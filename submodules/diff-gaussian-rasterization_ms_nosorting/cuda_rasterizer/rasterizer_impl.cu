@@ -297,8 +297,7 @@ __global__ void precomputeGaussianData(
 
 
 
-// kernerl 1： (Tight AABB)
-__global__ void countOITPointsPerTile_v8(
+__global__ void countOITPointsPerTile(
     int P, int W, int H,
     const float2* means2D, 
     const int* radii, 
@@ -339,7 +338,7 @@ __global__ void countOITPointsPerTile_v8(
     }
 }
 
-__global__ void fillOITTiles_v8(
+__global__ void fillOITTiles(
     int P, int W, int H,
     const float2* means2D, 
     const int* radii, 
@@ -384,7 +383,7 @@ __global__ void fillOITTiles_v8(
 }
 
 template <uint32_t CHANNELS>
-__global__ void __launch_bounds__(256) renderTileOIT_v8(
+__global__ void __launch_bounds__(256) renderTileOIT(
     const uint2* __restrict__ ranges,
     const uint32_t* __restrict__ point_list,
     int W, int H,
@@ -645,7 +644,7 @@ int CudaRasterizer::Rasterizer::forward(
         geomState.conic_opacity, workspace.precomp_w_thres
     );
 
-    countOITPointsPerTile_v8<<<(P + 255) / 256, 256>>>(
+    countOITPointsPerTile<<<(P + 255) / 256, 256>>>(
         P, width, height, geomState.means2D, radii, 
         geomState.conic_opacity, workspace.precomp_w_thres,
         tile_counts
@@ -665,7 +664,7 @@ int CudaRasterizer::Rasterizer::forward(
 
     initOITRangesKernel<<<(num_tiles + 255) / 256, 256>>>(num_tiles, tile_offsets, workspace.d_tile_ranges);
 
-    fillOITTiles_v8<<<(P + 255) / 256, 256>>>(
+    fillOITTiles<<<(P + 255) / 256, 256>>>(
         P, width, height, geomState.means2D, radii, 
         geomState.conic_opacity, workspace.precomp_w_thres,
         binningState.point_list_unsorted, workspace.d_tile_ranges, total_instances
@@ -673,9 +672,9 @@ int CudaRasterizer::Rasterizer::forward(
 
     const float* feature_ptr = colors_precomp != nullptr ? colors_precomp : geomState.rgb;
     
-    cudaFuncSetAttribute(renderTileOIT_v8<3>, cudaFuncAttributeMaxDynamicSharedMemorySize, 0);
+    cudaFuncSetAttribute(renderTileOIT<3>, cudaFuncAttributeMaxDynamicSharedMemorySize, 0);
 
-    renderTileOIT_v8<3><<<tile_grid, block>>>(
+    renderTileOIT<3><<<tile_grid, block>>>(
         workspace.d_tile_ranges, 
         binningState.point_list_unsorted,
         width, height, 
