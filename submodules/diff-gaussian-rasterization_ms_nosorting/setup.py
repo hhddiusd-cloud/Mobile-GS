@@ -19,7 +19,7 @@ setup(
     packages=['diff_gaussian_rasterization_ms_nosorting'],
     ext_modules=[
         CUDAExtension(
-            name="diff_gaussian_rasterization_ms_nosort._C",
+            name="diff_gaussian_rasterization_ms_nosorting._C",
             sources=[
             "cuda_rasterizer/rasterizer_impl.cu",
             "cuda_rasterizer/forward.cu",
